@@ -24,10 +24,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/cards', function (){
     $cards = "";
 
-    for ($x = 0; $x <= 1; $x++) {
+    for ($x = 0; $x < 1; $x++) {
         $request = new GuzzleHttp\Psr7\Request (
             "GET",
-            "https://api.scryfall.com/cards/random"
+            "https://api.scryfall.com/cards/e0644c92-4d67-475e-8c8e-0e2c493682fb"
 
         );
 
@@ -35,8 +35,7 @@ Route::get('/cards', function (){
         $result = $guzzle->send($request);
 
         $randomCard = json_decode($result->getBody()->getContents());
-
-        $cards = $cards . " " . $randomCard->oracle_text;
+        $cards = $cards . "</br/>" . (isset($randomCard->oracle_text) ?: "Oracle text is null");
     }
 
     return $cards;
